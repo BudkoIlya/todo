@@ -1,0 +1,31 @@
+.todo {
+    padding: 15px;
+    width: 50%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px solid #3F72AF;
+}
+.leftPart {
+    flex-basis: 50%;
+}
+.taskName {
+    display: flex;
+}
+.category {
+    display: flex;
+    margin-left: 20px;
+}
+.categoryDesc {
+    margin-left: 5px;
+}
+.description {
+   text-align: start;
+}
+.icons {
+    display: flex;
+    align-items: center;
+}
+.icons > img:first-child {
+    margin-right: 10px;
+}

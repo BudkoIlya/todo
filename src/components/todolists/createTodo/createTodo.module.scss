@@ -1,0 +1,88 @@
+.modalWindow {
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.3);
+  top: 0;
+}
+.createTodo {
+  background: #dbe2ef;
+  box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
+  position: absolute;
+  box-sizing: border-box;
+  padding: 24px;
+  width: 60%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  .title {
+    display: flex;
+    justify-content: space-between;
+    div:first-child {
+      font-weight: 500;
+      font-size: 40px;
+      line-height: 56px;
+    }
+  }
+}
+.firstFormsRow {
+  display: flex;
+  div {
+    width: 50%;
+    .formName {
+      font-size: 18px;
+    }
+    .category {
+      margin-left: 2%;
+    }
+  }
+  input,
+  select {
+    width: 98%;
+  }
+  input {
+    box-sizing: border-box;
+  }
+  select {
+    box-sizing: border-box;
+    margin-left: 2%;
+    height: 21px;
+    &:invalid {
+      color: gray;
+    }
+    option:first-child {
+      color: gray;
+    }
+    &:invalid option:not(:first-child) {
+      color: black;
+    }
+  }
+}
+.secondFormsRow {
+  textarea {
+    box-sizing: border-box;
+    width: 100%;
+    resize: none;
+  }
+}
+.formButtons {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 2%;
+
+  button {
+    font-size: 20px;
+    border: 2px solid #3f72af;
+    color: #3f72af;
+    box-sizing: border-box;
+    border-radius: 4px;
+    width: 200px;
+    height: 46px;
+  }
+  button:first-child {
+    color: white;
+    margin-right: 24px;
+    background: #3f72af;
+  }
+}
