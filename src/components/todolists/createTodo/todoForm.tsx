@@ -3,13 +3,9 @@ import styles from './createTodo.module.scss';
 import { Field, Formik, FormikProps } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../redux';
-import { addTodoA } from '../../../redux/todo-reducer';
+import { addTodoA, editTodoA, TodoListT } from '../../../redux/todo-reducer';
 
-type FormName = {
-  taskName: string;
-  categoryId: string;
-  description: string;
-};
+type FormName = Omit<TodoListT, 'id'>;
 
 export const TodoForm: React.FC<{ closeWindow: () => void }> = ({
   closeWindow
@@ -17,25 +13,28 @@ export const TodoForm: React.FC<{ closeWindow: () => void }> = ({
   const { isEditTodo } = useSelector((state: RootState) => state.todoLists);
   const dispatch = useDispatch();
   const addTodo = (values: FormName) => {
-    console.log('values', values);
     const newTodo = {
       id: 'todo' + new Date().getTime(),
-      name: values.taskName,
+      name: values.name,
       description: values.description,
       categoryId: values.categoryId
     };
     dispatch(addTodoA(newTodo));
   };
+  const editTodo = (values: FormName) => {
+    isEditTodo && dispatch(editTodoA({ ...values, id: isEditTodo.id }));
+  };
+
   return (
     <Formik
       enableReinitialize
       initialValues={{
-        taskName: '',
-        categoryId: '',
-        description: ''
+        name: isEditTodo ? isEditTodo.name : '',
+        categoryId: isEditTodo ? isEditTodo.categoryId : '',
+        description: isEditTodo ? isEditTodo.description : ''
       }}
       onSubmit={values => {
-        addTodo(values);
+        isEditTodo ? editTodo(values) : addTodo(values);
       }}
     >
       {props => (
@@ -66,7 +65,7 @@ const FirstFormsRow: React.FC<FormikProps<any>> = ({ handleChange }) => {
           type='text'
           onChange={handleChange}
           placeholder='Введите имя задачи'
-          name='taskName'
+          name='name'
         />
       </div>
       <div>
@@ -99,7 +98,7 @@ const SecondFormsRow: React.FC<FormikProps<any>> = ({ handleChange }) => {
     <div className={styles.secondFormsRow}>
       <div className={styles.formName}>Описание</div>
       <Field
-        type='textarea'
+        component='textarea'
         name='description'
         placeholder='Введите описание задачи'
         onChange={handleChange}

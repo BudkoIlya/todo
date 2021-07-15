@@ -7,28 +7,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux';
 import {
   activateEditTodoA,
-  increment,
+  deleteTodoA,
   TodoListT
 } from '../../redux/todo-reducer';
 import { CreateEditTodo } from './createTodo/createTodo';
 
 export const TodoLists: React.FC = () => {
-  // const count = useSelector((state: RootState) => state.todoLists.count);
   const { isCreateTodo, isEditTodo, todo } = useSelector(
     (state: RootState) => state.todoLists
   );
-  // const dispatch = useDispatch();
 
   return (
     <div>
       {(isCreateTodo || isEditTodo) && <CreateEditTodo />}
-      {/* increment */}
-      {/*<div>*/}
-      {/*  <div>{count}</div>*/}
-      {/*  <button type='button' onClick={() => dispatch(increment())}>*/}
-      {/*    Click*/}
-      {/*  </button>*/}
-      {/*</div>*/}
       {todo.map(todo => {
         return <TodoList todo={todo} key={todo.id} />;
       })}
@@ -38,9 +29,11 @@ export const TodoLists: React.FC = () => {
 
 const TodoList: React.FC<{ todo: TodoListT }> = ({ todo }) => {
   const dispatch = useDispatch();
-  const editTodo = (todo: TodoListT) => {
-    console.log('event', todo);
-    dispatch(activateEditTodoA(todo.id));
+  const editTodo = () => {
+    dispatch(activateEditTodoA(todo));
+  };
+  const deleteTodo = () => {
+    dispatch(deleteTodoA(todo.id));
   };
   const { name, description, categoryId } = todo;
   const { categories } = useSelector((state: RootState) => state.categories);
@@ -59,8 +52,8 @@ const TodoList: React.FC<{ todo: TodoListT }> = ({ todo }) => {
         <div className={styles.description}>{description}</div>
       </div>
       <div className={styles.icons}>
-        <img src={editImg} alt='edit' onClick={() => editTodo(todo)} />
-        <img src={deleteImg} alt='delete' />
+        <img src={editImg} alt='edit' onClick={editTodo} />
+        <img src={deleteImg} alt='delete' onClick={deleteTodo} />
       </div>
     </div>
   );

@@ -1,20 +1,18 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-let uniq = new Date().getTime();
-
-export type TodoListT = {
+export interface TodoListT {
   id: string;
   name: string;
   description: string;
   categoryId: string;
-};
+}
 
 const todoSlice = createSlice({
   name: 'todo',
   initialState: {
     count: 0,
     isCreateTodo: false,
-    isEditTodo: null,
+    isEditTodo: null as null | TodoListT,
     todo: [
       {
         id: 'todo1',
@@ -31,19 +29,23 @@ const todoSlice = createSlice({
     ]
   },
   reducers: {
-    increment(state) {
-      state.count = state.count + 1;
-    },
     activateCreateTodoA(state) {
       state.isCreateTodo = true;
     },
     activateEditTodoA(state, action) {
       state.isEditTodo = action.payload;
     },
-    addTodoA(state, action) {
+    addTodoA: (state, action: PayloadAction<TodoListT>) => {
       state.todo.push(action.payload);
     },
-    editTodo(state, action) {},
+    editTodoA: (state, { payload }: PayloadAction<TodoListT>) => {
+      state.todo = state.todo.map(el => {
+        return el.id === payload.id ? payload : el;
+      });
+    },
+    deleteTodoA: (state, action: PayloadAction<string>) => {
+      state.todo = state.todo.filter(({ id }) => id !== action.payload);
+    },
     cancelA(state) {
       state.isCreateTodo = false;
       state.isEditTodo = null;
@@ -53,9 +55,10 @@ const todoSlice = createSlice({
 
 export default todoSlice.reducer;
 export const {
-  increment,
   activateCreateTodoA,
   cancelA,
   activateEditTodoA,
-  addTodoA
+  addTodoA,
+  editTodoA,
+  deleteTodoA
 } = todoSlice.actions;
