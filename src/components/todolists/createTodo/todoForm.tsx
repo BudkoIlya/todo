@@ -3,7 +3,7 @@ import styles from './createTodo.module.scss';
 import { Field, Formik, FormikProps } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../redux';
-import { addTodoA, editTodoA, TodoListT } from '../../../redux/todo-reducer';
+import { addTodoA, updateTodoA, TodoListT } from '../../../redux/todo-reducer';
 
 type FormName = Omit<TodoListT, 'id'>;
 
@@ -14,7 +14,6 @@ export const TodoForm: React.FC<{ closeWindow: () => void }> = ({
   const dispatch = useDispatch();
   const addTodo = (values: FormName) => {
     const newTodo = {
-      id: 'todo' + new Date().getTime(),
       name: values.name,
       description: values.description,
       categoryId: values.categoryId
@@ -22,7 +21,7 @@ export const TodoForm: React.FC<{ closeWindow: () => void }> = ({
     dispatch(addTodoA(newTodo));
   };
   const editTodo = (values: FormName) => {
-    isEditTodo && dispatch(editTodoA({ ...values, id: isEditTodo.id }));
+    isEditTodo && dispatch(updateTodoA({ ...values, id: isEditTodo.id }));
   };
 
   return (

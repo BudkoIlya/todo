@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './todoLists.module.css';
 import folderImg from '../../assets/imgs/folder.png';
 import deleteImg from '../../assets/imgs/deleteTodo.png';
@@ -8,19 +8,26 @@ import { RootState } from '../../redux';
 import {
   activateEditTodoA,
   deleteTodoA,
+  fetchTodos,
   TodoListT
 } from '../../redux/todo-reducer';
 import { CreateEditTodo } from './createTodo/createTodo';
 
 export const TodoLists: React.FC = () => {
-  const { isCreateTodo, isEditTodo, todo } = useSelector(
+
+  const { isCreateTodo, isEditTodo, todos } = useSelector(
     (state: RootState) => state.todoLists
   );
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchTodos());
+  },[]);
 
   return (
     <div>
       {(isCreateTodo || isEditTodo) && <CreateEditTodo />}
-      {todo.map(todo => {
+      {todos.map(todo => {
         return <TodoList todo={todo} key={todo.id} />;
       })}
     </div>
