@@ -1,0 +1,25 @@
+@import '../variables';
+
+%layout {
+  padding: 15px;
+  width: 50%;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 2px solid $main-color;
+}
+%name-appearance {
+  color: black;
+  font-weight: 500;
+  line-height: 20px;
+}
+%icons-layout {
+  display: flex;
+  align-items: center;
+  img:first-child {
+    margin-right: 10px;
+  }
+}
+%description-color {
+  color: #808080;
+}

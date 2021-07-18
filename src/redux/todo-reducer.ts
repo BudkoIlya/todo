@@ -10,23 +10,48 @@ export interface TodoListT {
 
 const DB = new IDBService();
 
-export const fetchTodos = createAsyncThunk(
+export const fetchTodosA = createAsyncThunk(
   'todos/fetch',
-  async () => await DB.getData()
+  async (data, thunkAPI) => {
+    try {
+      return await DB.getData();
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
 );
 
 export const addTodoA = createAsyncThunk(
   'todos/add',
-  async (newTodo: Omit<TodoListT, 'id'>) => {
-    const todoId = await DB.insertValues(newTodo);
-    return { ...newTodo, id: todoId };
+  async (newTodo: Omit<TodoListT, 'id'>, thunkAPI) => {
+    try {
+      const todoId = await DB.insertValues(newTodo);
+      return { ...newTodo, id: todoId };
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
+
+export const deleteTodoA = createAsyncThunk(
+  'todo/delete',
+  async (id: string, thunkAPI) => {
+    try {
+      await DB.deleteData(id);
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err);
+    }
   }
 );
 
 export const updateTodoA = createAsyncThunk(
   'todos/edit',
-  async (updatedTodo: TodoListT) => {
-    return DB.updateData(updatedTodo);
+  async (updatedTodo: TodoListT, thunkAPI) => {
+    try {
+      await DB.updateData(updatedTodo);
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err);
+    }
   }
 );
 
@@ -54,18 +79,19 @@ const todoSlice = createSlice({
     }
   },
   extraReducers: builder => {
-    builder.addCase(fetchTodos.fulfilled, (state, action) => {
+    builder.addCase(fetchTodosA.fulfilled, (state, action) => {
       state.todos = action.payload;
     });
     builder.addCase(addTodoA.fulfilled, (state, action) => {
-      console.log('addTodoA', action);
       state.todos.push(action.payload as TodoListT);
     });
     builder.addCase(updateTodoA.fulfilled, (state, { meta: { arg } }) => {
-      console.log('updateTodoA action', arg);
       state.todos = state.todos.map(todo => {
         return todo.id === arg.id ? arg : todo;
       });
+    });
+    builder.addCase(deleteTodoA.fulfilled, (state, { meta: { arg: todoID } }) => {
+      state.todos = state.todos.filter(({ id }) => id !== todoID);
     });
   }
 });
@@ -74,8 +100,8 @@ export default todoSlice.reducer;
 export const {
   activateCreateTodoA,
   cancelA,
-  activateEditTodoA,
+  activateEditTodoA
   // addTodoA,
   // updateTodoA,
-  deleteTodoA
+  // deleteTodoA
 } = todoSlice.actions;

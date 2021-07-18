@@ -1,9 +1,9 @@
 import React from 'react';
 import exitButton from '../../../assets/imgs/exitButton.png';
-import styles from './createTodo.module.scss';
+import styles from './createTask.module.scss';
 import { useDispatch } from 'react-redux';
 import { cancelA } from '../../../redux/todo-reducer';
-import { TodoForm } from './todoForm';
+import { TaskForm } from './taskForm';
 
 export const CreateEditTodo: React.FC = () => {
   const dispatch = useDispatch();
@@ -20,7 +20,7 @@ export const CreateEditTodo: React.FC = () => {
             <img src={exitButton} alt='exit' />
           </div>
         </div>
-        <TodoForm closeWindow={closeWindow} />
+        <TaskForm closeWindow={closeWindow} />
       </div>
     </div>
   );

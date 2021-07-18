@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './createTodo.module.scss';
+import styles from './createTask.module.scss';
 import { Field, Formik, FormikProps } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../redux';
@@ -7,7 +7,7 @@ import { addTodoA, updateTodoA, TodoListT } from '../../../redux/todo-reducer';
 
 type FormName = Omit<TodoListT, 'id'>;
 
-export const TodoForm: React.FC<{ closeWindow: () => void }> = ({
+export const TaskForm: React.FC<{ closeWindow: () => void }> = ({
   closeWindow
 }) => {
   const { isEditTodo } = useSelector((state: RootState) => state.todoLists);

@@ -15,13 +15,11 @@ const categorySlice = createSlice({
         id: 'category1',
         name: 'name',
         description: 'description',
-        categoryId: 'categoryId'
       },
       {
         id: 'category2',
         name: 'name2',
-        description: 'description',
-        categoryId: 'categoryId'
+        description: 'description2',
       }
     ]
   },

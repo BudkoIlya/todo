@@ -1,10 +1,12 @@
+@import '../../scss/variables';
+
 .header {
   display: flex;
   color: white;
   width: calc(100% - 24px * 2);
   height: calc(9vh - 24px * 2);
   padding: 24px;
-  background: #3f72af;
+  background: $main-color;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
   align-items: center;
   justify-content: space-between;
@@ -12,4 +14,7 @@
 .tasksCategories {
   margin-right: auto;
   margin-left: 50px;
+  .link {
+    color: white;
+  }
 }

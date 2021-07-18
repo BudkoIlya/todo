@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import styles from './todoLists.module.css';
+import styles from './tasks.module.scss';
 import folderImg from '../../assets/imgs/folder.png';
 import deleteImg from '../../assets/imgs/deleteTodo.png';
 import editImg from '../../assets/imgs/editTodo.png';
@@ -8,33 +8,32 @@ import { RootState } from '../../redux';
 import {
   activateEditTodoA,
   deleteTodoA,
-  fetchTodos,
+  fetchTodosA,
   TodoListT
 } from '../../redux/todo-reducer';
-import { CreateEditTodo } from './createTodo/createTodo';
+import { CreateEditTodo } from './createTask/createTask';
 
-export const TodoLists: React.FC = () => {
-
+export const Tasks: React.FC = () => {
   const { isCreateTodo, isEditTodo, todos } = useSelector(
     (state: RootState) => state.todoLists
   );
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchTodos());
-  },[]);
+    dispatch(fetchTodosA());
+  }, [dispatch]);
 
   return (
     <div>
       {(isCreateTodo || isEditTodo) && <CreateEditTodo />}
       {todos.map(todo => {
-        return <TodoList todo={todo} key={todo.id} />;
+        return <Todo todo={todo} key={todo.id} />;
       })}
     </div>
   );
 };
 
-const TodoList: React.FC<{ todo: TodoListT }> = ({ todo }) => {
+const Todo: React.FC<{ todo: TodoListT }> = ({ todo }) => {
   const dispatch = useDispatch();
   const editTodo = () => {
     dispatch(activateEditTodoA(todo));
@@ -45,12 +44,11 @@ const TodoList: React.FC<{ todo: TodoListT }> = ({ todo }) => {
   const { name, description, categoryId } = todo;
   const { categories } = useSelector((state: RootState) => state.categories);
   const requiredCategory = categories.find(({ id }) => categoryId === id);
-  // имя категории нужно будет доаставть по ее айди
   return (
     <div className={styles.todo}>
       <div className={styles.leftPart}>
-        <div className={styles.taskName}>
-          <div>{name}</div>
+        <div className={styles.task}>
+          <div className={styles.taskName}>{name}</div>
           <div className={styles.category}>
             <img src={folderImg} alt='category' />
             <div className={styles.categoryDesc}>{requiredCategory?.name}</div>

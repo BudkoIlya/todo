@@ -1,0 +1,28 @@
+@import '../../scss/taskAndCategories/taskAndCategories';
+
+.todo {
+  @extend %layout;
+}
+.leftPart {
+  flex-basis: 50%;
+}
+.task {
+  display: flex;
+  .taskName {
+    @extend %name-appearance;
+  }
+}
+.category {
+  display: flex;
+  margin-left: 20px;
+}
+.categoryDesc {
+  margin-left: 5px;
+}
+.description {
+  text-align: start;
+  @extend %description-color;
+}
+.icons {
+  @extend %icons-layout;
+}

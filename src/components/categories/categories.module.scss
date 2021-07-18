@@ -1,0 +1,17 @@
+@import '../../scss/taskAndCategories/taskAndCategories';
+
+.category {
+  @extend %layout;
+}
+.leftPart {
+  flex-basis: 50%;
+  .categoryName {
+    @extend %name-appearance;
+  }
+}
+.description {
+  @extend %description-color;
+}
+.icons {
+  @extend %icons-layout;
+}
