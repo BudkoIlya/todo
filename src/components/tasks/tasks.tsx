@@ -11,7 +11,7 @@ import {
   fetchTodosA,
   TodoListT
 } from '../../redux/todo-reducer';
-import { CreateEditTodo } from './createTask/createTask';
+import { CreateTodoAndCategory } from '../createTaskAndCategory/createTodoAndCategory';
 
 export const Tasks: React.FC = () => {
   const { isCreateTodo, isEditTodo, todos } = useSelector(
@@ -25,7 +25,7 @@ export const Tasks: React.FC = () => {
 
   return (
     <div>
-      {(isCreateTodo || isEditTodo) && <CreateEditTodo />}
+      {(isCreateTodo || isEditTodo) && <CreateTodoAndCategory />}
       {todos.map(todo => {
         return <Todo todo={todo} key={todo.id} />;
       })}

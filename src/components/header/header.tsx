@@ -4,12 +4,15 @@ import { useDispatch } from 'react-redux';
 import { activateCreateTodoA } from '../../redux/todo-reducer';
 import { NavLink, useLocation } from 'react-router-dom';
 import { PATHS } from '../../App';
-import { log } from 'util';
+import { activeCreateCategoryA } from '../../redux/category-reducer';
 
 export const Header: React.FC = () => {
   const dispatch = useDispatch();
-  const createTodoList = () => {
+  const isCreateTodo = () => {
     dispatch(activateCreateTodoA());
+  };
+  const isCreateCategory = () => {
+    dispatch(activeCreateCategoryA());
   };
   const activeStyleLink = {
     color: '#8FB6FF'
@@ -21,8 +24,8 @@ export const Header: React.FC = () => {
 
   const whatCreate =
     pathname === PATHS.tasks
-      ? createTodoList
-      : () => console.log('create categories');
+      ? isCreateTodo
+      : isCreateCategory
 
   return (
     <div className={styles.header}>

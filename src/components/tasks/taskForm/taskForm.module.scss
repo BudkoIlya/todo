@@ -1,0 +1,44 @@
+@import '../../../scss/variables';
+@import '../../../scss/taskAndCategories/taskAndCategories';
+.firstFormsRow {
+  display: flex;
+  div {
+    width: 50%;
+    .formName {
+      font-size: 18px;
+    }
+    .category {
+      margin-left: 2%;
+    }
+  }
+  input,
+  select {
+    box-sizing: border-box;
+    width: 98%;
+    @extend %input-bolder-appearance;
+  }
+  select {
+    margin-left: 2%;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    &:invalid {
+      color: gray;
+    }
+    option:first-child {
+      color: gray;
+    }
+    &:invalid option:not(:first-child) {
+      color: black;
+    }
+  }
+}
+.secondFormsRow {
+  textarea {
+    background-color: $background-color;
+    box-sizing: border-box;
+    width: 100%;
+    resize: none;
+    @extend %input-bolder-appearance;
+  }
+}

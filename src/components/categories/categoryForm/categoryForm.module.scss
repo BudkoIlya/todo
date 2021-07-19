@@ -1,0 +1,13 @@
+@import '../../../scss/taskAndCategories/taskAndCategories';
+.form {
+  width: 100%;
+  input,
+  textarea {
+    width: 100%;
+    box-sizing: border-box;
+    @extend %input-bolder-appearance;
+  }
+  textarea {
+    resize: none;
+  }
+}
