@@ -1,5 +1,5 @@
 import React from 'react';
-import { Field, FormikProps } from 'formik';
+import { Field, Form, FormikProps } from 'formik';
 import styles from './categoryForm.module.scss';
 
 export const CategoryForm: React.FC<{ formikProps: FormikProps<any> }> = ({
@@ -7,7 +7,7 @@ export const CategoryForm: React.FC<{ formikProps: FormikProps<any> }> = ({
   children
 }) => {
   return (
-    <form onSubmit={handleSubmit} className={styles.form}>
+    <Form onSubmit={handleSubmit} className={styles.form}>
       <div>
         <div className={styles.title}>Имя</div>
         <Field
@@ -27,6 +27,6 @@ export const CategoryForm: React.FC<{ formikProps: FormikProps<any> }> = ({
         />
       </div>
       {children}
-    </form>
+    </Form>
   );
 };

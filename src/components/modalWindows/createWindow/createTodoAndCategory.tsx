@@ -1,5 +1,5 @@
 import React from 'react';
-import exitButton from '../../assets/imgs/exitButton.png';
+import exitButton from '../../../assets/imgs/exitButton.png';
 import styles from './createTodoAndCategory.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -7,25 +7,27 @@ import {
   closeModalWindowTodoA,
   TodoListT,
   updateTodoA
-} from '../../redux/todo-reducer';
-import { TaskForm } from '../tasks/taskForm/taskForm';
-import { RootState } from '../../redux';
+} from '../../../redux/todo-reducer';
+import { TaskForm } from '../../tasks/taskForm/taskForm';
+import { RootState } from '../../../redux';
 import { Formik } from 'formik';
 import {
   addCategoryA,
   CategoryT,
-  closeModalWindowCategoryA
-} from '../../redux/category-reducer';
-import { CategoryForm } from '../categories/categoryForm/categoryForm';
+  closeModalWindowCategoryA,
+  updateCategoryA
+} from '../../../redux/category-reducer';
+import { CategoryForm } from '../../categories/categoryForm/categoryForm';
+import { Loading } from '../../loading/loading';
 
 type FormNameTodo = Omit<TodoListT, 'id'>;
 type FormNameCategory = Omit<CategoryT, 'id'>;
 
 export const CreateTodoAndCategory: React.FC = () => {
-  const { isEditTodo, isCreateTodo } = useSelector(
+  const { isEditTodo, isCreateTodo, isLoadingTodo } = useSelector(
     (state: RootState) => state.todoLists
   );
-  const { isEditCategory } = useSelector(
+  const { isEditCategory, isLoadingCategories } = useSelector(
     (state: RootState) => state.categories
   );
   const isTodo = isEditTodo || isCreateTodo;
@@ -49,6 +51,10 @@ export const CreateTodoAndCategory: React.FC = () => {
     };
     dispatch(addCategoryA(newCategory));
   };
+  const editCategory = (values: FormNameCategory) => {
+    isEditCategory &&
+      dispatch(updateCategoryA({ ...values, id: isEditCategory.id }));
+  };
   const closeWindow = () => {
     isTodo
       ? dispatch(closeModalWindowTodoA())
@@ -69,7 +75,10 @@ export const CreateTodoAndCategory: React.FC = () => {
     <div className={styles.modalWindow}>
       <div className={styles.createTodoAndCategory}>
         <div className={styles.title}>
-          <div>Создание {isTodo ? 'задачи' : 'категории'}</div>
+          <div>
+            {isEditTodo || isEditCategory ? 'Редактирование ' : 'Создание '}
+            {isTodo ? 'задачи' : 'категории'}
+          </div>
           <div onClick={closeWindow}>
             <img src={exitButton} alt='exit' />
           </div>
@@ -78,12 +87,10 @@ export const CreateTodoAndCategory: React.FC = () => {
           enableReinitialize
           initialValues={initialValues}
           onSubmit={values => {
-            if (isTodo && values.categoryId) {
+            if (isTodo) {
               isEditTodo ? editTodo(values) : addTodo(values);
-              console.log('qqq');
             } else {
-              console.log('www');
-              isEditCategory ? console.log('edit') : addCategory(values);
+              isEditCategory ? editCategory(values) : addCategory(values);
             }
           }}
         >
@@ -91,11 +98,16 @@ export const CreateTodoAndCategory: React.FC = () => {
             <>
               {isTodo ? (
                 <TaskForm formikProps={props}>
-                  <Buttons isEditTodo={isEditTodo} closeWindow={closeWindow} />
+                  <Buttons
+                    isLoading={isLoadingTodo}
+                    isEditTodo={isEditTodo}
+                    closeWindow={closeWindow}
+                  />
                 </TaskForm>
               ) : (
                 <CategoryForm formikProps={props}>
                   <Buttons
+                    isLoading={isLoadingCategories}
                     isEditCategory={isEditCategory}
                     closeWindow={closeWindow}
                   />
@@ -113,21 +125,30 @@ type ButtonsT = {
   isEditTodo?: null | TodoListT;
   isEditCategory?: null | CategoryT;
   closeWindow: () => void;
+  isLoading: boolean;
 };
 
 const Buttons: React.FC<ButtonsT> = ({
   isEditTodo,
   isEditCategory,
-  closeWindow
+  closeWindow,
+  isLoading
 }) => {
   return (
     <div className={styles.formButtons}>
-      <button type='submit'>
-        {isEditTodo || isEditCategory ? 'Сохранить' : 'Создать'}
-      </button>
-      <button type='button' onClick={closeWindow}>
-        Закрыть
-      </button>
+      {isLoading && (
+        <div className={styles.loading}>
+          <Loading />
+        </div>
+      )}
+      <div className={styles.buttons}>
+        <button type='submit' disabled={isLoading}>
+          {isEditTodo || isEditCategory ? 'Сохранить' : 'Создать'}
+        </button>
+        <button type='button' onClick={closeWindow}>
+          Закрыть
+        </button>
+      </div>
     </div>
   );
 };

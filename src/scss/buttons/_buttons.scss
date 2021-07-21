@@ -1,0 +1,49 @@
+@import '../variables';
+
+$hover-color: #257fea;
+$active-color: #65abff;
+
+@mixin buttons-style($width, $height) {
+  .buttons {
+    display: flex;
+    button {
+      font-size: 20px;
+      border: 2px solid $main-color;
+      color: $main-color;
+      box-sizing: border-box;
+      border-radius: 4px;
+      width: $width;
+      height: $height;
+      background-color: $background-color;
+      cursor: pointer;
+
+      &:hover {
+        background-color: rgba(37, 127, 234, 0.2);
+        color: $hover-color;
+        border-color: $hover-color;
+      }
+
+      &:active {
+        background-color: $hover-color;
+        border-color: $hover-color;
+        color: white;
+      }
+    }
+
+    button:first-child {
+      color: white;
+      margin-right: 24px;
+      background-color: $main-color;
+
+      &:hover {
+        background-color: $hover-color;
+        border-color: $hover-color;
+      }
+
+      &:active {
+        background-color: $active-color;
+        border-color: $active-color;
+      }
+    }
+  }
+}

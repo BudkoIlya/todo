@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './taskForm.module.scss';
-import { Field, FormikProps } from 'formik';
+import { Field, Form, FormikProps } from 'formik';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../redux';
 
@@ -9,11 +9,11 @@ export const TaskForm: React.FC<{ formikProps: FormikProps<any> }> = ({
   children
 }) => {
   return (
-    <form onSubmit={formikProps.handleSubmit}>
+    <Form onSubmit={formikProps.handleSubmit}>
       <FirstFormsRow {...formikProps} />
       <SecondFormsRow {...formikProps} />
       {children}
-    </form>
+    </Form>
   );
 };
 
@@ -39,9 +39,7 @@ const FirstFormsRow: React.FC<FormikProps<any>> = ({ handleChange }) => {
           required
           onChange={handleChange}
         >
-          <option value='' defaultValue='' hidden>
-            Выберите категорию
-          </option>
+          <option defaultValue=''>Выберите категорию</option>
           {categories.map(({ id, name }) => {
             return (
               <option value={id} key={id}>

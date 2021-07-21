@@ -5,7 +5,7 @@ export interface TodoListT {
   id: string;
   name: string;
   description: string;
-  categoryId: string;
+  categoryId?: string;
 }
 
 const { getData, insertValues, deleteData, updateData } = IDBServiceTasks;
@@ -13,10 +13,13 @@ const { getData, insertValues, deleteData, updateData } = IDBServiceTasks;
 export const fetchTodosA = createAsyncThunk(
   'todos/fetch',
   async (data, thunkAPI) => {
+    thunkAPI.dispatch(toggleIsLoading(true));
     try {
       return await getData();
     } catch (err) {
       return thunkAPI.rejectWithValue(err);
+    } finally {
+      thunkAPI.dispatch(toggleIsLoading(false));
     }
   }
 );
@@ -24,11 +27,15 @@ export const fetchTodosA = createAsyncThunk(
 export const addTodoA = createAsyncThunk(
   'todos/add',
   async (newTodo: Omit<TodoListT, 'id'>, thunkAPI) => {
+    thunkAPI.dispatch(toggleIsLoading(true));
     try {
       const todoId = await insertValues(newTodo);
+      thunkAPI.dispatch(closeModalWindowTodoA());
       return { ...newTodo, id: todoId };
     } catch (err) {
       return thunkAPI.rejectWithValue(err);
+    } finally {
+      thunkAPI.dispatch(toggleIsLoading(false));
     }
   }
 );
@@ -36,10 +43,14 @@ export const addTodoA = createAsyncThunk(
 export const deleteTodoA = createAsyncThunk(
   'todo/delete',
   async (id: string, thunkAPI) => {
+    thunkAPI.dispatch(toggleIsLoading(true));
     try {
       await deleteData(id);
+      thunkAPI.dispatch(closeModalWindowTodoA());
     } catch (err) {
       return thunkAPI.rejectWithValue(err);
+    } finally {
+      thunkAPI.dispatch(toggleIsLoading(false));
     }
   }
 );
@@ -47,10 +58,14 @@ export const deleteTodoA = createAsyncThunk(
 export const updateTodoA = createAsyncThunk(
   'todos/edit',
   async (updatedTodo: TodoListT, thunkAPI) => {
+    thunkAPI.dispatch(toggleIsLoading(true));
     try {
       await updateData(updatedTodo);
+      thunkAPI.dispatch(closeModalWindowTodoA());
     } catch (err) {
       return thunkAPI.rejectWithValue(err);
+    } finally {
+      thunkAPI.dispatch(toggleIsLoading(false));
     }
   }
 );
@@ -61,21 +76,27 @@ const todoSlice = createSlice({
     count: 0,
     isCreateTodo: false,
     isEditTodo: null as null | TodoListT,
+    isDeleteTodo: false,
+    isLoadingTodo: false,
     todos: [] as TodoListT[]
   },
   reducers: {
     activateCreateTodoA(state) {
       state.isCreateTodo = true;
     },
-    activateEditTodoA(state, action) {
+    activateEditTodoA(state, action: PayloadAction<TodoListT>) {
       state.isEditTodo = action.payload;
     },
-    deleteTodoA: (state, action: PayloadAction<string>) => {
-      state.todos = state.todos.filter(({ id }) => id !== action.payload);
+    activeDeleteTodoA(state) {
+      state.isDeleteTodo = true;
     },
     closeModalWindowTodoA(state) {
       state.isCreateTodo = false;
       state.isEditTodo = null;
+      state.isDeleteTodo = false;
+    },
+    toggleIsLoading(state, action: PayloadAction<boolean>) {
+      state.isLoadingTodo = action.payload;
     }
   },
   extraReducers: builder => {
@@ -94,11 +115,17 @@ const todoSlice = createSlice({
       deleteTodoA.fulfilled,
       (state, { meta: { arg: todoID } }) => {
         state.todos = state.todos.filter(({ id }) => id !== todoID);
+        state.isDeleteTodo = false;
       }
     );
   }
 });
 
 export default todoSlice.reducer;
-export const { activateCreateTodoA, closeModalWindowTodoA, activateEditTodoA } =
-  todoSlice.actions;
+export const {
+  activateCreateTodoA,
+  closeModalWindowTodoA,
+  activateEditTodoA,
+  activeDeleteTodoA,
+  toggleIsLoading
+} = todoSlice.actions;

@@ -21,16 +21,27 @@
     margin-left: 2%;
     -webkit-appearance: none;
     -moz-appearance: none;
-    appearance: none;
-    &:invalid {
+    //border-color: red;
+    //&:valid {
+    //  color: gray;
+    //}
+    //option:not(:checked) {
+    //  color:black;
+    //}
+    option {
+      background-color: red;
+      //border-color: $main-color;
       color: gray;
+      border: 2px solid orange;
+      padding: 10px;
     }
-    option:first-child {
-      color: gray;
-    }
-    &:invalid option:not(:first-child) {
-      color: black;
-    }
+
+    //option:first-child {
+    //  color: gray;
+    //}
+    //&:invalid option:not(:first-child) {
+    //  color: black;
+    //}
   }
 }
 .secondFormsRow {

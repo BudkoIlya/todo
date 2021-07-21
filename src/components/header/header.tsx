@@ -47,7 +47,7 @@ export const Header: React.FC = () => {
           Категории
         </NavLink>
       </div>
-      <div onClick={whatCreate}>{whatAdd}</div>
+      <div onClick={whatCreate} className={styles.add}>{whatAdd}</div>
     </div>
   );
 };
