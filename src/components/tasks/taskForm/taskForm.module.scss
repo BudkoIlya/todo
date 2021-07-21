@@ -4,9 +4,6 @@
   display: flex;
   div {
     width: 50%;
-    .formName {
-      font-size: 18px;
-    }
     .category {
       margin-left: 2%;
     }
@@ -21,27 +18,11 @@
     margin-left: 2%;
     -webkit-appearance: none;
     -moz-appearance: none;
-    //border-color: red;
-    //&:valid {
-    //  color: gray;
-    //}
-    //option:not(:checked) {
-    //  color:black;
-    //}
     option {
-      background-color: red;
-      //border-color: $main-color;
       color: gray;
       border: 2px solid orange;
       padding: 10px;
     }
-
-    //option:first-child {
-    //  color: gray;
-    //}
-    //&:invalid option:not(:first-child) {
-    //  color: black;
-    //}
   }
 }
 .secondFormsRow {
@@ -51,5 +32,25 @@
     width: 100%;
     resize: none;
     @extend %input-bolder-appearance;
+  }
+}
+.firstFormsRow > div:first-child,
+.secondFormsRow {
+  position: relative;
+}
+.firstFormsRow > div:first-child {
+  .title {
+    width: fit-content;
+  }
+}
+.title {
+  position: absolute;
+  left: 12px;
+  top: 10px;
+  background-color: $background-color;
+  padding: 0 2px;
+  font-size: 15px;
+  span {
+    color: red;
   }
 }

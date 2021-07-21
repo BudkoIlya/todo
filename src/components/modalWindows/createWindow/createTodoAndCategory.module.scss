@@ -18,13 +18,16 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  .title {
+  .titleBlock {
     display: flex;
     justify-content: space-between;
     div:first-child {
       font-weight: 500;
       font-size: 40px;
       line-height: 56px;
+    }
+    img {
+      cursor: pointer;
     }
   }
 }

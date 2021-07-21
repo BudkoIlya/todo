@@ -1,4 +1,5 @@
 @import '../../../scss/taskAndCategories/taskAndCategories';
+@import '../../../scss/variables';
 .form {
   width: 100%;
   input,
@@ -9,5 +10,19 @@
   }
   textarea {
     resize: none;
+  }
+}
+.fieldBlock {
+  position: relative;
+}
+.title {
+  position: absolute;
+  left: 12px;
+  top: 10px;
+  background-color: $background-color;
+  padding: 0 2px;
+  font-size: 15px;
+  span {
+    color: red;
   }
 }

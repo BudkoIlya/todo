@@ -1,8 +1,8 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import styles from './tasks.module.scss';
 import folderImg from '../../assets/imgs/folder.png';
-import deleteImg from '../../assets/imgs/deleteTodo.png';
-import editImg from '../../assets/imgs/editTodo.png';
+import deleteImg from '../../assets/imgs/delete.png';
+import editImg from '../../assets/imgs/edit.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux';
 import {

@@ -1,9 +1,9 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux';
 import styles from './categories.module.scss';
-import editImg from '../../assets/imgs/editTodo.png';
-import deleteImg from '../../assets/imgs/deleteTodo.png';
+import editImg from '../../assets/imgs/edit.png';
+import deleteImg from '../../assets/imgs/delete.png';
 import {
   CategoryT,
   activateEditCategory,

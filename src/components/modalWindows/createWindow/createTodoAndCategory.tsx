@@ -31,6 +31,7 @@ export const CreateTodoAndCategory: React.FC = () => {
     (state: RootState) => state.categories
   );
   const isTodo = isEditTodo || isCreateTodo;
+
   const dispatch = useDispatch();
 
   const addTodo = (values: FormNameTodo) => {
@@ -74,7 +75,7 @@ export const CreateTodoAndCategory: React.FC = () => {
   return (
     <div className={styles.modalWindow}>
       <div className={styles.createTodoAndCategory}>
-        <div className={styles.title}>
+        <div className={styles.titleBlock}>
           <div>
             {isEditTodo || isEditCategory ? 'Редактирование ' : 'Создание '}
             {isTodo ? 'задачи' : 'категории'}

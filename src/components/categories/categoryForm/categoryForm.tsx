@@ -8,16 +8,17 @@ export const CategoryForm: React.FC<{ formikProps: FormikProps<any> }> = ({
 }) => {
   return (
     <Form onSubmit={handleSubmit} className={styles.form}>
-      <div>
-        <div className={styles.title}>Имя</div>
+      <div className={styles.fieldBlock}>
+        <div className={styles.title}>Имя <span>*</span></div>
         <Field
           type='text'
           onChange={handleChange}
           placeholder='Введите имя категории'
           name='name'
+          required
         />
       </div>
-      <div>
+      <div className={styles.fieldBlock}>
         <div className={styles.title}>Описание</div>
         <Field
           component='textarea'

@@ -22,16 +22,19 @@ const FirstFormsRow: React.FC<FormikProps<any>> = ({ handleChange }) => {
   return (
     <div className={styles.firstFormsRow}>
       <div>
-        <div className={styles.formName}>Имя</div>
+        <div className={styles.title}>
+          Имя <span>*</span>
+        </div>
         <Field
           type='text'
           onChange={handleChange}
           placeholder='Введите имя задачи'
           name='name'
+          required
         />
       </div>
       <div>
-        <div className={`${styles.formName} ${styles.category}`}>Категория</div>
+        <div className={`${styles.title} ${styles.category}`}>Категория</div>
         <Field
           component='select'
           name='categoryId'
@@ -56,7 +59,7 @@ const FirstFormsRow: React.FC<FormikProps<any>> = ({ handleChange }) => {
 const SecondFormsRow: React.FC<FormikProps<any>> = ({ handleChange }) => {
   return (
     <div className={styles.secondFormsRow}>
-      <div className={styles.formName}>Описание</div>
+      <div className={styles.title}>Описание</div>
       <Field
         component='textarea'
         name='description'
