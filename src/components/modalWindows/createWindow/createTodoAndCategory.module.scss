@@ -30,12 +30,15 @@
       cursor: pointer;
     }
   }
+  @media (min-width: 3000px)  {
+    width: 35%;
+  }
 }
 .formButtons {
   display: flex;
   justify-content: flex-end;
   margin-top: 2%;
-  @include buttons-style(200px, 50px)
+  @include buttons-style(200px, 50px);
 }
 .loading {
   position: relative;

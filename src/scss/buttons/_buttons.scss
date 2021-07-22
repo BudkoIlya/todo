@@ -1,8 +1,5 @@
 @import '../variables';
 
-$hover-color: #257fea;
-$active-color: #65abff;
-
 @mixin buttons-style($width, $height) {
   .buttons {
     display: flex;

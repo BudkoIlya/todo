@@ -1,28 +1,24 @@
 @import '../../../scss/taskAndCategories/taskAndCategories';
-@import '../../../scss/variables';
+@import '../../../scss/forms/forms';
 .form {
   width: 100%;
   input,
   textarea {
     width: 100%;
     box-sizing: border-box;
-    @extend %input-bolder-appearance;
+    resize: none;
+    @extend %input-style;
   }
   textarea {
-    resize: none;
+    height: $textarea-height;
   }
 }
 .fieldBlock {
   position: relative;
 }
 .title {
-  position: absolute;
-  left: 12px;
-  top: 10px;
-  background-color: $background-color;
-  padding: 0 2px;
-  font-size: 15px;
-  span {
-    color: red;
-  }
+  @extend %title-style;
+}
+.formError {
+  @extend %form-error;
 }
