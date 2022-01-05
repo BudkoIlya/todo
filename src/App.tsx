@@ -24,7 +24,7 @@ const App: React.FC = () => {
       <Header />
       <Switch>
         <Redirect exact from='/' to='/tasks' />
-        <Route path={PATHS.tasks}>
+        <Route exact path={PATHS.tasks}>
           <Tasks />
         </Route>
         <Route exact path={PATHS.categories}>

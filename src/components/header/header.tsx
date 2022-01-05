@@ -22,16 +22,14 @@ export const Header: React.FC = () => {
   const whatAdd =
     pathname === PATHS.tasks ? 'Добавить задачу' : 'Добавить категорию';
 
-  const whatCreate =
-    pathname === PATHS.tasks
-      ? isCreateTodo
-      : isCreateCategory
+  const whatCreate = pathname === PATHS.tasks ? isCreateTodo : isCreateCategory;
 
   return (
     <div className={styles.header}>
       <div className={styles.title}>ToDoList</div>
       <div className={styles.tasksCategories}>
         <NavLink
+          exact
           to={PATHS.tasks}
           activeStyle={activeStyleLink}
           className={styles.link}
@@ -40,6 +38,7 @@ export const Header: React.FC = () => {
         </NavLink>
         <span> | </span>
         <NavLink
+          exact
           to={PATHS.categories}
           activeStyle={activeStyleLink}
           className={styles.link}
@@ -47,7 +46,9 @@ export const Header: React.FC = () => {
           Категории
         </NavLink>
       </div>
-      <div onClick={whatCreate} className={styles.add}>{whatAdd}</div>
+      <div onClick={whatCreate} className={styles.add}>
+        {whatAdd}
+      </div>
     </div>
   );
 };
